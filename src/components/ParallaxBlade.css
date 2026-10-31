@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════
+   PARALLAX BLADE — Black/White Theme
+   ═══════════════════════════════════ */
+
+.parallax-blade {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--section-padding) 0;
+  overflow: hidden;
+  background: var(--black-rich);
+}
+
+.parallax-blade__bg-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.02;
+  background-image: repeating-linear-gradient(
+    45deg, transparent, transparent 50px,
+    rgba(255,255,255,0.05) 50px, rgba(255,255,255,0.05) 51px
+  );
+}
+
+.parallax-blade__image {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%) rotate(15deg);
+  width: clamp(350px, 45vw, 750px);
+  opacity: 0.12;
+  filter: grayscale(1) drop-shadow(0 0 60px rgba(255,255,255,0.08));
+  z-index: 0;
+  pointer-events: none;
+}
+
+.parallax-blade__image img { width: 100%; }
+
+.parallax-blade__content {
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.parallax-blade__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.parallax-blade__label span:last-child {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.label-line {
+  width: 36px;
+  height: 1px;
+  background: var(--red);
+}
+
+.parallax-blade__heading {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 60px);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 2px;
+  line-height: 1.3;
+}
+
+.parallax-blade__heading .kanji {
+  font-family: var(--font-japanese);
+  font-size: 1.3em;
+  color: var(--red);
+  margin-right: 6px;
+}
+
+.parallax-blade__heading em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.parallax-blade__quote {
+  z-index: 1;
+  text-align: center;
+  max-width: 650px;
+}
+
+.parallax-blade__quote blockquote {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.8vw, 21px);
+  font-style: italic;
+  color: var(--gray-300);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.parallax-blade__quote cite {
+  display: block;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gray-600);
+  font-style: normal;
+}

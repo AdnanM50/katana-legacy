@@ -1,0 +1,245 @@
+/* ═══════════════════════════════════════
+   KATANA COLLECTION — Black/White + Red
+   ═══════════════════════════════════════ */
+
+.katana-collection {
+  position: relative;
+  padding: var(--section-padding) 0;
+  background: var(--black);
+  overflow: hidden;
+}
+
+/* Subtle background pattern */
+.katana-collection::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url('/images/japanese-pattern.png');
+  background-size: 200px;
+}
+
+.katana-collection__header { margin-bottom: 70px; position: relative; z-index: 1; }
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 24px;
+}
+
+.katana-collection__title-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.collection-kanji {
+  font-family: var(--font-japanese) !important;
+  font-size: clamp(60px, 10vw, 100px) !important;
+  color: var(--red) !important;
+  font-weight: 900;
+}
+
+.katana-collection__title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 90px);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.katana-collection__subtitle {
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--gray-500);
+  letter-spacing: 2px;
+}
+
+.katana-collection__subtitle .arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+}
+
+.katana-collection__subtitle:hover .arrow {
+  transform: translateX(6px);
+}
+
+/* Grid */
+.katana-collection__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Card */
+.katana-card {
+  position: relative;
+  background: var(--gray-900);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 3px;
+  padding: 36px 28px 28px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.5s var(--ease-expo), box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+.katana-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px -16px rgba(0,0,0,0.9);
+  border-color: rgba(255,255,255,0.08);
+}
+
+.katana-card__glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.katana-card:hover .katana-card__glow { opacity: 1; }
+
+.katana-card__border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  pointer-events: none;
+  transition: border-color 0.5s ease;
+}
+
+.katana-card:hover .katana-card__border {
+  border-color: rgba(196, 30, 30, 0.2);
+}
+
+/* Sheath/Blade Visual */
+.katana-card__visual {
+  position: relative;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.katana-card__blade {
+  width: 88%;
+  max-height: 120px;
+  object-fit: contain;
+  filter: grayscale(0.5) drop-shadow(0 8px 24px rgba(0,0,0,0.6));
+  transition: filter 0.5s ease;
+}
+
+.katana-card:hover .katana-card__blade {
+  filter: grayscale(0) drop-shadow(0 8px 32px rgba(196, 30, 30, 0.2));
+}
+
+/* Sheath overlay */
+.katana-card__sheath {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.sheath-body {
+  width: 82%;
+  height: 28px;
+  background: linear-gradient(180deg, #151515 0%, #222 30%, #151515 50%, #222 70%, #151515 100%);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.sheath-wrap {
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 10%, rgba(80,50,20,0.3) 30%, rgba(80,50,20,0.5) 50%, rgba(80,50,20,0.3) 70%, transparent 90%);
+  border-radius: 2px;
+}
+
+/* Info */
+.katana-card__japanese {
+  font-family: var(--font-japanese);
+  font-size: 13px;
+  color: var(--red);
+  opacity: 0.5;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.katana-card__name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.katana-card__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.katana-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 14px;
+}
+
+.katana-card__price {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.katana-card__btn {
+  background: none;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-family: var(--font-display);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+.katana-card__btn:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .katana-collection__grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+}

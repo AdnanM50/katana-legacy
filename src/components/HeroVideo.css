@@ -1,0 +1,444 @@
+/* ═══════════════════════════════════════════════════════════════════
+   HERO SCROLL CANVAS — 123-Frame Scroll Scrubbing Engine
+   Black & White Cinema + Blood Red Japanese Aesthetics
+   ═══════════════════════════════════════════════════════════════════ */
+
+.hero-scroll-container {
+  position: relative;
+  width: 100%;
+  height: 520vh; /* Smooth, luxurious scrub timeline */
+  background: var(--black);
+}
+
+.hero-sticky-stage {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Atmospheric Overlays */
+.hero-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.45) 75%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+}
+
+.hero-ink-mist {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    transparent 20%,
+    transparent 80%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+/* Loader */
+.hero-frames-loader {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(196, 30, 30, 0.3);
+  padding: 10px 18px;
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+}
+
+.loader-ring-pulse {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseSpin 3s linear infinite;
+}
+
+.loader-kanji-sm {
+  font-family: var(--font-japanese);
+  font-size: 14px;
+  color: var(--red);
+}
+
+.loader-text-status {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gray-300);
+}
+
+@keyframes pulseSpin {
+  0% { transform: rotate(0deg); opacity: 0.6; }
+  50% { transform: rotate(180deg); opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 0.6; }
+}
+
+/* ── Hero Initial Intro Banner ── */
+.hero-intro-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  width: min(90vw, 1000px);
+  pointer-events: none;
+}
+
+.banner-kanji-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-japanese);
+  font-size: clamp(140px, 28vw, 380px);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05);
+  line-height: 1;
+  letter-spacing: -10px;
+  user-select: none;
+  z-index: -1;
+}
+
+.banner-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(11px, 1.4vw, 14px);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--red);
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.banner-headline {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 9vw, 110px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: clamp(4px, 1.5vw, 16px);
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+}
+
+.banner-headline span {
+  color: var(--white);
+  background: linear-gradient(180deg, #ffffff 0%, #aaaaaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.scroll-invitation {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.scroll-sword-indicator {
+  width: 2px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.blade-streak {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to bottom, transparent, var(--red), transparent);
+  animation: streakDown 1.8s ease-in-out infinite;
+}
+
+@keyframes streakDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+.scroll-invitation span {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gray-400);
+}
+
+/* ── Narrative Story Act Cards ── */
+.story-act-card {
+  position: absolute;
+  z-index: 15;
+  max-width: min(90vw, 560px);
+  background: rgba(10, 10, 10, 0.82);
+  border-left: 2px solid var(--red);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.95);
+  pointer-events: auto;
+}
+
+/* Positioning for different acts to feel like dynamic cinema */
+.story-act-1 {
+  bottom: clamp(60px, 12vh, 140px);
+  left: clamp(20px, 7vw, 100px);
+}
+
+.story-act-2 {
+  top: clamp(100px, 18vh, 180px);
+  right: clamp(20px, 7vw, 100px);
+  border-left: none;
+  border-right: 2px solid var(--red);
+  border-radius: 6px 0 0 6px;
+}
+
+.story-act-3 {
+  bottom: clamp(60px, 12vh, 140px);
+  left: clamp(20px, 7vw, 100px);
+}
+
+.act-index {
+  font-family: var(--font-japanese);
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--red);
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.act-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 2px;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.act-description {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.4vw, 20px);
+  color: var(--gray-300);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.act-kanji-seal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-family: var(--font-japanese);
+  font-size: 26px;
+  font-weight: 900;
+  color: rgba(196, 30, 30, 0.35);
+  border: 1px solid rgba(196, 30, 30, 0.3);
+  padding: 4px 8px;
+  border-radius: 4px;
+  user-select: none;
+}
+
+/* ── Act 4: NINDO Master Climax Card ── */
+.story-act-4 {
+  bottom: clamp(40px, 8vh, 80px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 760px);
+  max-width: 760px;
+  text-align: center;
+  border: 1px solid rgba(196, 30, 30, 0.35);
+  border-radius: 8px;
+  background: rgba(8, 8, 8, 0.9);
+  padding: clamp(32px, 5vw, 54px);
+  box-shadow: 0 40px 100px -10px rgba(0, 0, 0, 0.98), 0 0 50px rgba(196, 30, 30, 0.15);
+}
+
+.nindo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(196, 30, 30, 0.15);
+  border: 1px solid rgba(196, 30, 30, 0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+.nindo-icon {
+  font-family: var(--font-japanese);
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.nindo-text {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.nindo-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4.5vw, 48px);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: 3px;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.nindo-kanji-big {
+  font-family: var(--font-japanese);
+  color: var(--red);
+  font-size: 1.1em;
+  letter-spacing: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.nindo-quote {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.5vw, 21px);
+  font-style: italic;
+  color: var(--gray-300);
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+
+.nindo-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.nindo-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--red);
+  color: var(--white);
+  padding: 14px 28px;
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(196, 30, 30, 0.4);
+}
+
+.nindo-btn-primary:hover {
+  background: var(--red-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(196, 30, 30, 0.6);
+}
+
+.nindo-btn-primary .btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.nindo-btn-primary:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.nindo-btn-secondary {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--white);
+  padding: 14px 24px;
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 3px;
+  transition: all 0.3s ease;
+}
+
+.nindo-btn-secondary:hover {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Side Legend */
+.hero-fixed-side-legend {
+  position: absolute;
+  top: 50%;
+  right: 28px;
+  transform: translateY(-50%);
+  z-index: 12;
+  font-family: var(--font-japanese);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 8px;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero-scroll-container {
+    height: 440vh;
+  }
+  .story-act-card {
+    left: 5% !important;
+    right: 5% !important;
+    width: 90% !important;
+    max-width: none !important;
+    border-radius: 4px !important;
+    padding: 24px !important;
+  }
+  .story-act-1, .story-act-3 {
+    bottom: 40px !important;
+  }
+  .story-act-2 {
+    top: 90px !important;
+    border-left: 2px solid var(--red) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+  }
+  .story-act-4 {
+    bottom: 20px !important;
+    padding: 24px 18px !important;
+  }
+  .hero-fixed-side-legend {
+    display: none;
+  }
+}

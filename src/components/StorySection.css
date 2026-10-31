@@ -1,0 +1,219 @@
+/* ═══════════════════════════════════
+   STORY — Ninja Life & Katana Respect
+   ═══════════════════════════════════ */
+
+.story-section {
+  position: relative;
+  padding: var(--section-padding) 0;
+  background: var(--black);
+}
+
+/* Header */
+.story-section__header {
+  text-align: center;
+  margin-bottom: clamp(60px, 10vh, 120px);
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 24px;
+}
+
+.tag-line {
+  width: 30px;
+  height: 1px;
+  background: var(--red);
+}
+
+.story-section__heading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 4px;
+  line-height: 1.15;
+}
+
+.story-section__heading .red {
+  color: var(--red);
+}
+
+.story-section__sub {
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.6vw, 20px);
+  color: var(--gray-500);
+  font-style: italic;
+  letter-spacing: 2px;
+}
+
+/* ── Story Block ── */
+.story-block {
+  position: relative;
+  padding: clamp(60px, 8vh, 120px) 0;
+  overflow: hidden;
+}
+
+.story-block__bg-kanji {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-japanese);
+  font-size: clamp(300px, 40vw, 600px);
+  font-weight: 900;
+  color: var(--white);
+  opacity: 0.03;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.story-block__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(40px, 6vw, 100px);
+}
+
+.story-block.reversed .story-block__inner {
+  flex-direction: row-reverse;
+}
+
+/* Media */
+.story-block__media {
+  flex: 1;
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 2px;
+  max-width: 600px;
+}
+
+.story-block__media video,
+.story-block__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.4) contrast(1.1);
+  transition: filter 0.6s ease;
+}
+
+.story-block:hover .story-block__media video,
+.story-block:hover .story-block__media img {
+  filter: grayscale(0.1) contrast(1.05);
+}
+
+.media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0,0,0,0.3) 0%,
+    transparent 50%,
+    rgba(0,0,0,0.2) 100%
+  );
+  pointer-events: none;
+}
+
+.media-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+/* Content */
+.story-block__content {
+  flex: 1;
+  max-width: 480px;
+}
+
+.story-block__number {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.num-kanji {
+  font-family: var(--font-japanese);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.num-roman {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gray-600);
+}
+
+.story-block__title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 2px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.story-block__text {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--gray-400);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.story-block__accent-line {
+  width: 50px;
+  height: 2px;
+  background: var(--red);
+  margin-top: 28px;
+  transition: width 0.5s var(--ease-expo);
+}
+
+.story-block:hover .story-block__accent-line {
+  width: 90px;
+}
+
+/* Divider between blocks */
+.story-block + .story-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gray-800), transparent);
+}
+
+@media (max-width: 768px) {
+  .story-block__inner,
+  .story-block.reversed .story-block__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .story-block__media {
+    max-width: 100%;
+  }
+  .story-block__content {
+    max-width: 100%;
+  }
+  .story-block__accent-line {
+    margin: 20px auto 0;
+  }
+  .story-block__number {
+    justify-content: center;
+  }
+}
